@@ -21,6 +21,8 @@
 #pragma once
 
 #include "Graphics.h"
+#include "NDCSpaceTransformer.h"
+#include "Cube.h"
 
 class Game
 {
@@ -40,5 +42,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	NDCSpaceTransformer nst;
+	Cube cube;
 	/********************************/
 };
