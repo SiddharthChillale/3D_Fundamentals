@@ -307,7 +307,7 @@ std::wstring Graphics::Exception::GetErrorDescription() const
 
 std::wstring Graphics::Exception::GetExceptionType() const
 {
-	return L"Chili Graphics Exception";
+	return L"Graphics Exception";
 }
 
 void Graphics::DrawLine( float x1,float y1,float x2,float y2,Color c )
