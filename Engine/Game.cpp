@@ -51,19 +51,36 @@ void Game::UpdateModel()
 #include "Mat3.h"
 void Game::ComposeFrame()
 {
-	auto lines = cube.GetLines();
+	const Color colors[12] = {
+		Colors::White,
+		Colors::Blue,
+		Colors::Cyan,
+		Colors::Gray,
+		Colors::Green,
+		Colors::Magenta,
+		Colors::LightGray,
+		Colors::Red,
+		Colors::Yellow,
+		Colors::White,
+		Colors::Blue,
+		Colors::Cyan
+	};
+	auto triangles = cube.GetTriangles();
 	const Mat3 rot = Mat3::RotationX(theta_x) * Mat3::RotationY(theta_y) * Mat3::RotationZ(theta_z);
 
-	for (auto& v : lines.vertices) {
+	for (auto& v : triangles.vertices) {
 		v *= rot;
 		v += {0.0f, 0.0f, offset_z};
 
 		nst.Transform(v);
 	}
 
-	for (auto i = lines.indices.cbegin(), end = lines.indices.cend(); i != end; std::advance(i, 2)) {
-		//auto t = (2.5f - lines.vertices[*i].z )/ 2.5f;
-		gfx.DrawLine(lines.vertices[*i], lines.vertices[*next(i)], Colors::White);
-		//gfx.DrawLine(lines.vertices[*i], lines.vertices[ *next(i)], Color(255u*t, 255u * t, 255u * t ));
+	for (size_t i = 0, end = triangles.indices.size() / 3; i < end; i++) {
+		
+		gfx.DrawTriangle(triangles.vertices[triangles.indices[i * 3]],
+						 triangles.vertices[triangles.indices[i * 3 + 1]],
+						 triangles.vertices[triangles.indices[i * 3 + 2]] ,
+						 colors[i]);
+		
 	}
 }
