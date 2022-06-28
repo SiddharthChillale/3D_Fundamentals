@@ -23,6 +23,9 @@ public:
 		}
 		return *this;
 	}
+	_Mat3& operator*=(const _Mat3& rhs) {
+		return *this = *this * rhs;
+	}
 	_Mat3 operator*( T rhs ) const
 	{
 		_Mat3 result = *this;
@@ -61,6 +64,34 @@ public:
 			(T)0.0,(T)0.0,factor 
 		};
 	}
+
+	static _Mat3 RotationZ(T theta) {
+		const T sinTheta = sin(theta);
+		const T cosTheta = cos(theta);
+		return {
+			cosTheta,  sinTheta, (T)0.0,
+			-sinTheta, cosTheta, (T)0.0,
+			(T)0.0,   (T)0.0,   (T)1.0
+		};
+	}
+	static _Mat3 RotationY(T theta) {
+		const T sinTheta = sin(theta);
+		const T cosTheta = cos(theta);
+		return {
+			cosTheta,   (T)0.0,	 -sinTheta,
+			(T)0.0,    (T)1.0,   (T)0.0,
+			sinTheta,  (T)0.0,	 cosTheta
+		};
+	}static _Mat3 RotationX(T theta) {
+			const T sinTheta = sin(theta);
+			const T cosTheta = cos(theta);
+			return {
+				 (T)1.0,(T)0.0,(T)0.0,
+				 (T)0.0, cosTheta,  sinTheta,
+				(T)0.0, -sinTheta, cosTheta,
+			};
+		}
+
 public:
 	// [ row ][ col ]
 	T elements[3][3];
