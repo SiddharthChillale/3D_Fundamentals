@@ -41,6 +41,12 @@ void Game::UpdateModel()
 	if (wnd.kbd.KeyIsPressed('D')) {
 		wrap_angle(theta_z = theta_z - dTheta * dt);
 	}
+	if (wnd.kbd.KeyIsPressed('R')) {
+		offset_z += 2.0f * dt;
+	}
+	if (wnd.kbd.KeyIsPressed('F')) {
+		offset_z -= 2.0f * dt;
+	}
 }
 #include "Mat3.h"
 void Game::ComposeFrame()
@@ -50,12 +56,14 @@ void Game::ComposeFrame()
 
 	for (auto& v : lines.vertices) {
 		v *= rot;
-		v += {0.0f, 0.0f, 1.0f};
+		v += {0.0f, 0.0f, offset_z};
 
 		nst.Transform(v);
 	}
 
 	for (auto i = lines.indices.cbegin(), end = lines.indices.cend(); i != end; std::advance(i, 2)) {
-		gfx.DrawLine(lines.vertices[*i], lines.vertices[ *next(i)], Colors::White);
+		//auto t = (2.5f - lines.vertices[*i].z )/ 2.5f;
+		gfx.DrawLine(lines.vertices[*i], lines.vertices[*next(i)], Colors::White);
+		//gfx.DrawLine(lines.vertices[*i], lines.vertices[ *next(i)], Color(255u*t, 255u * t, 255u * t ));
 	}
 }
