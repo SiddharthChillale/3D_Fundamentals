@@ -139,6 +139,8 @@
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
     <ClInclude Include="BaseMath.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SolidCubeScene.h" />
     <ClInclude Include="WinDefines.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />

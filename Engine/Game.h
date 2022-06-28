@@ -2,8 +2,10 @@
 #pragma once
 
 #include "Graphics.h"
-#include "NDCSpaceTransformer.h"
-#include "Cube.h"
+#include "Scene.h"
+#include <memory>
+#include <vector>
+
 
 class Game
 {
@@ -23,12 +25,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	float offset_z = 2.0f;
-	float theta_x = 0.0f;
-	float theta_y = 0.0f;
-	float theta_z = 0.0f;
-	static constexpr float dTheta = PI;
-	NDCSpaceTransformer nst;
-	Cube cube;
+	std::vector<std::unique_ptr<Scene>> scenes;
+	std::vector<std::unique_ptr<Scene>>::iterator curScene;
 	/********************************/
 };
