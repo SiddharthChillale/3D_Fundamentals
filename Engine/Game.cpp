@@ -68,19 +68,33 @@ void Game::ComposeFrame()
 	auto triangles = cube.GetTriangles();
 	const Mat3 rot = Mat3::RotationX(theta_x) * Mat3::RotationY(theta_y) * Mat3::RotationZ(theta_z);
 
+	// Apply world spce translation and rotations
 	for (auto& v : triangles.vertices) {
 		v *= rot;
-		v += {0.0f, 0.0f, offset_z};
+		v += {0.0f, 0.0f, offset_z};	
+	}
 
+	for (size_t i = 0, end = triangles.indices.size() / 3; i < end; i++) {
+		const Vec3& v0 = triangles.vertices[triangles.indices[i * 3]];
+		const Vec3& v1 = triangles.vertices[triangles.indices[i * 3 + 1]];
+		const Vec3& v2 = triangles.vertices[triangles.indices[i * 3 + 2]];
+
+		triangles.cullFlags[i] = (v1 - v0).cross(v2 - v0) * v0 > 0.0f;
+	}
+
+	// Transform from world space to screen space
+	for (auto& v : triangles.vertices) {
 		nst.Transform(v);
 	}
 
 	for (size_t i = 0, end = triangles.indices.size() / 3; i < end; i++) {
 		
-		gfx.DrawTriangle(triangles.vertices[triangles.indices[i * 3]],
-						 triangles.vertices[triangles.indices[i * 3 + 1]],
-						 triangles.vertices[triangles.indices[i * 3 + 2]] ,
-						 colors[i]);
+		if (triangles.cullFlags[i] == false) {
+			gfx.DrawTriangle(triangles.vertices[triangles.indices[i * 3]],
+							 triangles.vertices[triangles.indices[i * 3 + 1]],
+							 triangles.vertices[triangles.indices[i * 3 + 2]],
+							 colors[i]);
+		}
 		
 	}
 }
