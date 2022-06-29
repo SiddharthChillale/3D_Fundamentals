@@ -19,6 +19,8 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void CycleScenes();
+
 	/********************************/
 private:
 	MainWindow& wnd;
