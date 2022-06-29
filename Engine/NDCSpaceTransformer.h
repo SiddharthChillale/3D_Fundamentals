@@ -1,4 +1,7 @@
 #pragma once
+
+// Normalised Device Coordinate Space transformer. transforms images to conform to [-1,1] space
+
 #include "Vec3.h"
 #include "Graphics.h"
 
