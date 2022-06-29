@@ -3,6 +3,7 @@
 #include "Vec3.h"
 #include "IndexedLineList.h"
 #include "IndexedTriangles.h"
+#include "TexVertex.h"
 #include <vector>
 
 class Cube {
@@ -19,6 +20,16 @@ public:
 		vertices.emplace_back( -side, side, side  );
 		vertices.emplace_back( side, side, side   );
 
+		
+		tc.emplace_back(0.0f, 1.0f);
+		tc.emplace_back(1.0f, 1.0f);
+		tc.emplace_back(0.0f, 0.0f);
+		tc.emplace_back(1.0f, 0.0f);
+		tc.emplace_back(1.0f, 1.0f);
+		tc.emplace_back(0.0f, 1.0f);
+		tc.emplace_back(1.0f, 0.0f);
+		tc.emplace_back(0.0f, 0.0f);
+
 	}
 
 	IndexedLineList GetLines()const {
@@ -32,7 +43,7 @@ public:
 		};
 	}
 
-	IndexTriangleList GetTriangles()const {
+	IndexTriangleList<Vec3> GetTriangles()const {
 		return {
 			vertices,
 			{
@@ -46,6 +57,26 @@ public:
 		};
 	}
 
+	IndexTriangleList<TexVertex> GetTrianglesTex()const {
+		std::vector<TexVertex> tex_verts;
+		tex_verts.reserve(vertices.size());
+		for (size_t i = 0; i < vertices.size(); i++) {
+			tex_verts.emplace_back(vertices[i], tc[i]);
+		}
+		return{
+			std::move(tex_verts),
+			{
+			0,2,1, 2,3,1,
+			1,3,5, 3,7,5,
+			2,6,3, 3,6,7,
+			4,5,7, 4,7,6,
+			0,4,2, 2,4,6,
+			0,1,4, 1,5,4
+			}
+		};
+	}
+
 private:
 	std::vector<Vec3> vertices;
+	std::vector<Vec2> tc;
 };

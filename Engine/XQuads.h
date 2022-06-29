@@ -29,7 +29,7 @@ public:
 			}
 		};
 	}
-	IndexTriangleList GetTriangles() const
+	IndexTriangleList<Vec3> GetTriangles() const
 	{
 		return{
 			vertices,{

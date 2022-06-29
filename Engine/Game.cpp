@@ -4,6 +4,8 @@
 #include "SolidCubeScene.h"
 #include "CubeOrderScene.h"
 #include "XMutualScene.h"
+#include "TexCubeScene.h"
+
 
 Game::Game( MainWindow& wnd )
 	:
@@ -13,6 +15,7 @@ Game::Game( MainWindow& wnd )
 	scenes.push_back(std::make_unique<SolidCubeScene>());
 	scenes.push_back(std::make_unique<CubeOrderScene>());
 	scenes.push_back(std::make_unique<XMutualScene>());
+	scenes.push_back(std::make_unique< TexCubeScene>());
 	curScene = scenes.begin();
 }
 

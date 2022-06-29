@@ -142,6 +142,8 @@
     <ClInclude Include="BaseMath.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SolidCubeScene.h" />
+    <ClInclude Include="TexCubeScene.h" />
+    <ClInclude Include="TexVertex.h" />
     <ClInclude Include="WinDefines.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
