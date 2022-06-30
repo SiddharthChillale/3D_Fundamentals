@@ -35,7 +35,14 @@ void Game::UpdateModel()
 		const auto e = wnd.kbd.ReadKey();
 		if (e.GetCode() == VK_TAB && e.IsPress())
 		{
-			CycleScenes();
+			if (wnd.kbd.KeyIsPressed(VK_SHIFT))
+			{
+				ReverseCycleScenes();
+			}
+			else
+			{
+				CycleScenes();
+			}
 		}
 	}
 	(*curScene)->Update(wnd.kbd, wnd.mouse, dt);
@@ -52,4 +59,17 @@ void Game::CycleScenes()
 	{
 		curScene = scenes.begin();
 	}
+}
+
+void Game::ReverseCycleScenes()
+{
+	if (curScene == scenes.begin())
+	{
+		curScene = scenes.end() - 1;
+	}
+	else
+	{
+		--curScene;
+	}
+	
 }
