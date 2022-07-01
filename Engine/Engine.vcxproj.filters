@@ -78,34 +78,25 @@
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IndexedLineList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IndexedTriangles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SolidCubeScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CubeOrderScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XMutualScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XQuads.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TexCubeScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TexVertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FrameTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinCubeScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

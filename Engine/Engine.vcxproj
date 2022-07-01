@@ -141,10 +141,10 @@
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
     <ClInclude Include="BaseMath.h" />
+    <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SolidCubeScene.h" />
-    <ClInclude Include="TexCubeScene.h" />
-    <ClInclude Include="TexVertex.h" />
+    <ClInclude Include="SkinCubeScene.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="WinDefines.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
@@ -152,7 +152,6 @@
     <ClInclude Include="GDIPlusManager.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="IndexedLineList.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mat2.h" />
@@ -164,8 +163,6 @@
     <ClInclude Include="Surface.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
-    <ClInclude Include="XMutualScene.h" />
-    <ClInclude Include="XQuads.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp" />

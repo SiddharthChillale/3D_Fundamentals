@@ -1,10 +1,7 @@
 
 #include "MainWindow.h"
 #include "Game.h"
-#include "SolidCubeScene.h"
-#include "CubeOrderScene.h"
-#include "XMutualScene.h"
-#include "TexCubeScene.h"
+#include "SkinCubeScene.h"
 
 
 Game::Game( MainWindow& wnd )
@@ -12,10 +9,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )	
 {
-	scenes.push_back(std::make_unique<SolidCubeScene>());
-	scenes.push_back(std::make_unique<CubeOrderScene>());
-	scenes.push_back(std::make_unique<XMutualScene>());
-	scenes.push_back(std::make_unique< TexCubeScene>());
+	scenes.push_back(std::make_unique<SkinCubeScene>(gfx, L"image\\office_skin.jpg"));
+	
 	curScene = scenes.begin();
 }
 
@@ -50,7 +45,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	(*curScene)->Draw(gfx);
+	(*curScene)->Draw();
 }
 
 void Game::CycleScenes()
