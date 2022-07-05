@@ -144,6 +144,7 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SkinCubeScene.h" />
+    <ClInclude Include="TextureEffect.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="WinDefines.h" />
     <ClInclude Include="Colors.h" />
