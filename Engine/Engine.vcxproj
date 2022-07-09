@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CubeOrderScene.h" />
+    <ClInclude Include="CubeSolidScene.h" />
     <ClInclude Include="CubeVertexColorScene.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="IndexedTriangles.h" />
