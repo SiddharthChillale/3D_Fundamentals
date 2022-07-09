@@ -2,7 +2,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "SkinCubeScene.h"
-
+#include "CubeVertexColorScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -10,7 +10,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )	
 {
 	scenes.push_back(std::make_unique<SkinCubeScene>(gfx, L"image\\office_skin.jpg"));
-	
+	scenes.push_back(std::make_unique<CubeVertexColorScene>(gfx));
 	curScene = scenes.begin();
 }
 
@@ -25,6 +25,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	// cycle through scenes when tab is pressed
 	while (!wnd.kbd.KeyIsEmpty())
 	{
 		const auto e = wnd.kbd.ReadKey();
@@ -39,7 +40,12 @@ void Game::UpdateModel()
 				CycleScenes();
 			}
 		}
+		else if (e.GetCode() == VK_ESCAPE && e.IsPress())
+		{
+			wnd.Kill();
+		}
 	}
+	// update scene
 	(*curScene)->Update(wnd.kbd, wnd.mouse, dt);
 }
 

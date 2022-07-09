@@ -1,5 +1,6 @@
-
 #pragma once
+
+#include "Vec3.h"
 
 class Color
 {
@@ -27,6 +28,16 @@ public:
 		:
 		Color( (x << 24u) | col.dword )
 	{}
+
+	// the explicit keyword forces user to use this constructor by vertbatim deliberately. AS in say, function DoBar(Color u) expects a Color object. so when you call the function as DoBar(10, 10, 10), it implicitly converts it to Color using its original constructor. But with the following explicit keyword, it'll never change the 3 numbers into a Vec3 object unless DoBar(Vec3(10, 10, 10)) is called.
+	explicit Color(const Vec3& cf)
+		:
+		Color(unsigned char(cf.x), unsigned char(cf.y), unsigned char(cf.z)){}
+
+	explicit operator Vec3() const {
+		return { float(GetR()), float(GetG()), float(GetB()) };
+	}
+
 	Color& operator =( Color color )
 	{
 		dword = color.dword;

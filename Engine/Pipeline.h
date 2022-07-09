@@ -43,7 +43,7 @@ private:
 
 		// transform vertices using rotation_matrix + translation
 		for (const auto& v : vertices) {
-			verticesOut.emplace_back(v.pos * rotation + translation, v.t);
+			verticesOut.emplace_back(v.pos * rotation + translation, v);
 		}
 
 		// assemble into triangles again

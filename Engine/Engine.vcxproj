@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CubeOrderScene.h" />
+    <ClInclude Include="CubeVertexColorScene.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
@@ -144,8 +145,10 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SkinCubeScene.h" />
+    <ClInclude Include="SolidEffect.h" />
     <ClInclude Include="TextureEffect.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="VertexColorEffect.h" />
     <ClInclude Include="WinDefines.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
