@@ -79,9 +79,9 @@ private:
 
 	// Perspective and viewport transform
 	void PostProcessTriangleVertices(Triangle<Vertex>& triangle) {
-		nst.Transform(triangle.v0.pos);
-		nst.Transform(triangle.v1.pos);
-		nst.Transform(triangle.v2.pos);
+		nst.Transform(triangle.v0);
+		nst.Transform(triangle.v1);
+		nst.Transform(triangle.v2);
 
 		DrawTriangle(triangle);
 	}
@@ -211,8 +211,13 @@ private:
 
 			for (int x = xStart; x < xEnd; x++, iLine += diLine)
 			{
+
+				const float z = 1.0f / iLine.pos.z;
+
+				const auto attr = iLine * z;
+
 				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel(x, y, effect.ps(iLine));
+				gfx.PutPixel(x, y, effect.ps(attr));
 			}
 		}
 	}
