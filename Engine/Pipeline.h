@@ -6,6 +6,8 @@
 #include "IndexedTriangles.h"
 #include "NDCSpaceTransformer.h"
 #include "Mat3.h"
+#include "ZBuffer.h"
+
 #include <algorithm>
 
 // fixed-function triangle drawing pipeline
@@ -19,7 +21,8 @@ public:
 public:
 	Pipeline(Graphics& gfx) 
 	:
-	gfx(gfx)
+	gfx(gfx),
+	zb(gfx.ScreenWidth, gfx.ScreenHeight)
 	{}
 	void Draw(IndexTriangleList<Vertex>& triList) {
 		ProcessVertices(triList.vertices, triList.indices);
@@ -29,6 +32,9 @@ public:
 	}
 	void BindTranslation(const Vec3& translation_in) {
 		translation = translation_in;
+	}
+	void BeginFrame() {
+		zb.Clear();
 	}
 	
 
@@ -214,10 +220,13 @@ private:
 
 				const float z = 1.0f / iLine.pos.z;
 
-				const auto attr = iLine * z;
+				if (zb.TestAndSet(x, y, z)) {
+					const auto attr = iLine * z;
 
-				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel(x, y, effect.ps(attr));
+					// perform texture lookup, clamp, and write pixel
+					gfx.PutPixel(x, y, effect.ps(attr));
+				}
+				
 			}
 		}
 	}
@@ -225,8 +234,10 @@ private:
 		Effect effect;
 private:
 	Graphics& gfx;
+	ZBuffer zb;
 	Mat3 rotation;
 	Vec3 translation;
 	NDCSpaceTransformer nst;
 	std::unique_ptr<Surface> pTex;
+
 };

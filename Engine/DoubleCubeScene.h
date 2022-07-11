@@ -64,6 +64,8 @@ public:
 	}
 	virtual void Draw() override
 	{
+		pipeline.BeginFrame();
+
 		// draw fixed cube
 		{
 			// generate rotation matrix from euler angles

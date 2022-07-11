@@ -64,6 +64,7 @@ public:
 		const Mat3 rot = Mat3::RotationX(theta_x) * Mat3::RotationY(theta_y) * Mat3::RotationZ(theta_z);
 		const Vec3 translate = Vec3{ 0.0f, 0.0f, offset_z };
 
+		pipeline.BeginFrame();
 		pipeline.BindRotation(rot);
 		pipeline.BindTranslation(translate);
 
