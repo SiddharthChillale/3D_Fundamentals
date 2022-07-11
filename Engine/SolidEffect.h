@@ -1,5 +1,6 @@
 #pragma once
 #include "Pipeline.h"
+#include "DefaultVertexShader.h"
 
 class SolidEffect {
 public:
@@ -63,6 +64,9 @@ public:
 		Color color;
 	};
 
+	typedef typename DefaultVertexShader<Vertex> VertexShader;
+
+
 	class PixelShader {
 	public:
 		template<class I>
@@ -73,5 +77,6 @@ public:
 	};
 
 public:
+	VertexShader vs;
 	PixelShader ps;
 };

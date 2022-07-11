@@ -65,8 +65,8 @@ public:
 		const Vec3 translate = Vec3{ 0.0f, 0.0f, offset_z };
 
 		pipeline.BeginFrame();
-		pipeline.BindRotation(rot);
-		pipeline.BindTranslation(translate);
+		pipeline.effect.vs.BindRotation(rot);
+		pipeline.effect.vs.BindTranslation(translate);
 
 		pipeline.Draw(itList);
 	}
