@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CubeSolidGeometryScene.h" />
     <ClInclude Include="CubeSolidScene.h" />
     <ClInclude Include="CubeVertexColorScene.h" />
     <ClInclude Include="DefaultGeometryShader.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SkinCubeScene.h" />
     <ClInclude Include="SolidEffect.h" />
+    <ClInclude Include="SolidGeometryEffect.h" />
     <ClInclude Include="TextureEffect.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="VertexColorEffect.h" />
