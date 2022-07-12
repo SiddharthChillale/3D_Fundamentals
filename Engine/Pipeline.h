@@ -18,6 +18,8 @@ public:
 	// vertex type used for geometry and throughout pipeline
 	typedef typename Effect::Vertex Vertex;
 	typedef typename Effect::VertexShader::Output VSOut;
+	typedef typename Effect::GeometryShader::Output GSOut;
+
 public:
 	Pipeline(Graphics& gfx) 
 	:
@@ -30,6 +32,7 @@ public:
 	
 	void BeginFrame() {
 		zb.Clear();
+		triangle_index = 0u;
 	}
 	
 
@@ -77,7 +80,7 @@ private:
 	}
 
 	// Perspective and viewport transform
-	void PostProcessTriangleVertices(Triangle<VSOut>& triangle) {
+	void PostProcessTriangleVertices(Triangle<GSOut>& triangle) {
 		nst.Transform(triangle.v0);
 		nst.Transform(triangle.v1);
 		nst.Transform(triangle.v2);
@@ -94,12 +97,12 @@ private:
 
 
 
-	void DrawTriangle(const Triangle<VSOut>& triangle) {
-		
+	void DrawTriangle(const Triangle<GSOut>& triangle) {
+
 		// using pointers so we can swap (for sorting purposes)
-		const VSOut* pv0 = &triangle.v0;
-		const VSOut* pv1 = &triangle.v1;
-		const VSOut* pv2 = &triangle.v2;
+		const GSOut* pv0 = &triangle.v0;
+		const GSOut* pv1 = &triangle.v1;
+		const GSOut* pv2 = &triangle.v2;
 
 		// sorting vertices by y
 		if (pv1->pos.y < pv0->pos.y) std::swap(pv0, pv1);
@@ -141,7 +144,7 @@ private:
 		}
 	}
 
-	void DrawFlatTopTriangle(const VSOut& it0, const VSOut& it1, const VSOut& it2) {
+	void DrawFlatTopTriangle(const GSOut& it0, const GSOut& it1, const GSOut& it2) {
 		
 		// calulcate dVertex / dy
 		// change in interpolant for every 1 change in y
@@ -156,7 +159,7 @@ private:
 		DrawFlatTriangle(it0, it1, it2, dit0, dit1, itEdge1);
 	}
 
-	void DrawFlatBottomTriangle(const VSOut& it0, const VSOut& it1, const VSOut& it2) {
+	void DrawFlatBottomTriangle(const GSOut& it0, const GSOut& it1, const GSOut& it2) {
 		// calculate dVertex / dy
 		// change in interpolant for every 1 change in y
 		const float delta_y = it2.pos.y - it0.pos.y;
@@ -170,11 +173,11 @@ private:
 		DrawFlatTriangle(it0, it1, it2, dit0, dit1, itEdge1);
 	}
 
-	void DrawFlatTriangle(const VSOut& it0,
-		const VSOut& it1,
-		const VSOut& it2,
-		const VSOut& dv0,
-		const VSOut& dv1,
+	void DrawFlatTriangle(const GSOut& it0,
+		const GSOut& it1,
+		const GSOut& it2,
+		const GSOut& dv0,
+		const GSOut& dv1,
 		VSOut itEdge1) {
 		
 		
@@ -230,5 +233,5 @@ private:
 	ZBuffer zb;
 	NDCSpaceTransformer nst;
 	std::unique_ptr<Surface> pTex;
-
+	unsigned int triangle_index;
 };

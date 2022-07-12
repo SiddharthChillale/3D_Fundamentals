@@ -2,6 +2,7 @@
 
 #include "Pipeline.h"
 #include "DefaultVertexShader.h"
+#include "DefaultGeometryShader.h"
 
 class TextureEffect {
 public:
@@ -69,7 +70,8 @@ public:
 		Vec2 t;
 	};
 
-	typedef typename DefaultVertexShader<Vertex> VertexShader;
+	typedef DefaultVertexShader<Vertex> VertexShader;
+	typedef DefaultGeometryShader<Vertex> GeometryShader;
 
 	class PixelShader {
 	public:
@@ -101,4 +103,6 @@ public:
 public:
 	VertexShader vs;
 	PixelShader ps;
+	GeometryShader gs;
+
 };

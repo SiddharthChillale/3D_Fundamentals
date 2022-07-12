@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pipeline.h"
+#include "DefaultGeometryShader.h"
 
 class WaveVertexTextureEffect {
 public:
@@ -125,8 +126,12 @@ public:
 		float freqScroll = 5.0f;
 		float amplitude = 0.05f;
 	};
+
+	typedef DefaultGeometryShader<Vertex> GeometryShader;
+
 public:
 	VertexShader vs;
 	PixelShader ps;
+	GeometryShader gs;
 
 };
