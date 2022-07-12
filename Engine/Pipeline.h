@@ -32,7 +32,6 @@ public:
 	
 	void BeginFrame() {
 		zb.Clear();
-		triangle_index = 0u;
 	}
 	
 
@@ -57,7 +56,7 @@ private:
 	// assembles indexed vertex stream into triangles and passes them to post process
 	// culls (does not send) back facing triangles
 	void AssembleTriangles(const std::vector<VSOut>& vertices, const std::vector<size_t>& indices) {
-		for (size_t i = 0, end = indices.size() / 3; i < end; i++, triangle_index++) {
+		for (size_t i = 0, end = indices.size() / 3; i < end; i++) {
 			const auto& v0 = vertices[indices[i * 3 + 0]];
 			const auto& v1 = vertices[indices[i * 3 + 1]];
 			const auto& v2 = vertices[indices[i * 3 + 2]];
@@ -65,7 +64,7 @@ private:
 			// take care of backface culling
 			if (((v1.pos - v0.pos).cross(v2.pos - v0.pos)) * v0.pos <= 0.0f) {
 				// process the three vertices into a triangle
-				ProcessTriangle(v0, v1, v2);
+				ProcessTriangle(v0, v1, v2,i);
 			}
 		}
 	}
@@ -73,7 +72,7 @@ private:
 	// triangle processing function
 	// takes 3 vertices to generate triangle
 	// sends generated triangle to post-processing
-	void ProcessTriangle(const VSOut& v0, const VSOut& v1, const VSOut& v2) {
+	void ProcessTriangle(const VSOut& v0, const VSOut& v1, const VSOut& v2, size_t triangle_index) {
 		// generate triangle from 3 vertices using gs
 		// and send to post-processing
 		PostProcessTriangleVertices(effect.gs(v0, v1, v2, triangle_index) );
@@ -233,5 +232,4 @@ private:
 	ZBuffer zb;
 	NDCSpaceTransformer nst;
 	std::unique_ptr<Surface> pTex;
-	unsigned int triangle_index;
 };
