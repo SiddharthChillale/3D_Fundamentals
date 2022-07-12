@@ -189,4 +189,8 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="suzanne.obj" />
+    <Object Include="bunny.obj" />
+  </ItemGroup>
 </Project>

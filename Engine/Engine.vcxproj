@@ -257,6 +257,10 @@
   <ItemGroup>
     <Image Include="Chili.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="bunny.obj" />
+    <Object Include="suzanne.obj" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
