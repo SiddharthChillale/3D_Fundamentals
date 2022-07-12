@@ -138,6 +138,12 @@
     <ClInclude Include="CubeSolidGeometryScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VertexFlatEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeFlatIndependentScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -188,9 +194,5 @@
     <Image Include="Chili.ico">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="suzanne.obj" />
-    <Object Include="bunny.obj" />
   </ItemGroup>
 </Project>

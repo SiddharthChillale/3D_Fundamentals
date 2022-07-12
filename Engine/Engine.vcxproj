@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CubeFlatIndependentScene.h" />
     <ClInclude Include="CubeSolidGeometryScene.h" />
     <ClInclude Include="CubeSolidScene.h" />
     <ClInclude Include="CubeVertexColorScene.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="TextureEffect.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="VertexColorEffect.h" />
+    <ClInclude Include="VertexFlatEffect.h" />
     <ClInclude Include="VertexWaveScene.h" />
     <ClInclude Include="WaveVertexTextureEffect.h" />
     <ClInclude Include="WinDefines.h" />
@@ -256,10 +258,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Chili.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="bunny.obj" />
-    <Object Include="suzanne.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
