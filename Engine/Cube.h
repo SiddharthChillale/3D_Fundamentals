@@ -44,7 +44,6 @@ public:
 	{
 		auto cube = GetPlainIndependentFaces<V>(size);
 
-		std::vector<Vec3> vertices;
 
 		//vertices.emplace_back( -side,-side,-side ); // 0 near side
 		//vertices.emplace_back( side,-side,-side ); // 1
