@@ -149,6 +149,7 @@
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
     <ClInclude Include="BaseMath.h" />
+    <ClInclude Include="Miniball.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Scene.h" />

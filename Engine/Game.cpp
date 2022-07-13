@@ -14,7 +14,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )	
 {
-	scenes.push_back(std::make_unique<GeometryFlatScene>(gfx, IndexTriangleList<GeometryFlatScene::Vertex>::Load("Models\\bunny.obj")));
+	scenes.push_back(std::make_unique<GeometryFlatScene>(gfx, IndexTriangleList<GeometryFlatScene::Vertex>::Load("Models\\suzanne.obj")));
 	scenes.push_back(std::make_unique<CubeFlatIndependentScene>(gfx));
 	scenes.push_back(std::make_unique<CubeSolidGeometryScene>(gfx));
 	scenes.push_back(std::make_unique<VertexWaveScene>(gfx));

@@ -5,6 +5,7 @@
 #include <cctype>
 #include <sstream>
 
+#include "Miniball.h"
 #include "Vec3.h"
 #include "tiny_obj_loader.h"
 
@@ -93,6 +94,36 @@ public:
 
 	}
 
+	void AdjustToTrueCenter() {
+		struct VertexAccessor {
+			typedef std::vector<T>::const_iterator Pit;
+			typedef const float* Cit;
+			Cit operator()(Pit it)const {
+				return &it->pos.x;
+			}
+		};
+
+		// solce minimum bounding sphere
+		Miniball::Miniball<VertexAccessor> mb(3, vertices.cbegin(), vertices.cend());
+
+	
+		//result is pointer to float[3]
+		const auto pc = mb.center();
+		const Vec3 center = { *pc, *std::next(pc), *std::next(pc, 2) };
+
+		//adjust all vertices so that center of sphere is 0,0
+		for (auto& v : vertices) {
+			v.pos -= center;
+		}
+	}
+
+	float GetRadius()const {
+		auto farthest_vec = std::max_element(vertices.begin(), vertices.end(), [](const T& v0, const T& v1) {
+			return v0.pos.LenSq() < v1.pos.LenSq();
+			});
+
+		return farthest_vec->pos.Len();
+	}
 	std::vector<T> vertices;
 	std::vector<size_t> indices;
 };
