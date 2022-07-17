@@ -156,6 +156,7 @@
     <ClInclude Include="SkinCubeScene.h" />
     <ClInclude Include="SolidEffect.h" />
     <ClInclude Include="SolidGeometryEffect.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="TextureEffect.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="Triangle.h" />

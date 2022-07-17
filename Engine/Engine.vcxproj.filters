@@ -156,6 +156,9 @@
     <ClInclude Include="Miniball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
