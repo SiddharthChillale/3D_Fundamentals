@@ -95,7 +95,7 @@ public:
 		};
 	}
 
-	/*template<class V>
+	template<class V>
 	static IndexTriangleList<V> GetPlainNormals(float radius = 1.0f, int latDiv = 12, int longDiv = 24) {
 		auto sphere = GetPlain<V>(radius, latDiv, longDiv);
 
@@ -103,5 +103,5 @@ public:
 			v.n = v.pos.GetNormalized();
 		}
 		return sphere;
-	}*/
+	}
 };

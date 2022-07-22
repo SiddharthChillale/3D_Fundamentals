@@ -146,6 +146,8 @@
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="GeometryFlatEffect.h" />
     <ClInclude Include="GeometryFlatScene.h" />
+    <ClInclude Include="GouraudEffect.h" />
+    <ClInclude Include="GouraudScene.h" />
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
     <ClInclude Include="BaseMath.h" />

@@ -1,16 +1,11 @@
-#pragma once
+#pragma once  
 
 #include "Pipeline.h"
-#include "DefaultVertexShader.h"
 #include "DefaultGeometryShader.h"
 
-// flat shading with vertex normals
-class VertexFlatEffect
-{
+class GouraudEffect {
 public:
-	// the vertex type that will be input into the pipeline
-	class Vertex
-	{
+	class Vertex {
 	public:
 		Vertex() = default;
 		Vertex(const Vec3& pos)
@@ -30,7 +25,6 @@ public:
 		Vertex& operator+=(const Vertex& rhs)
 		{
 			pos += rhs.pos;
-			
 			return *this;
 		}
 		Vertex operator+(const Vertex& rhs) const
@@ -40,7 +34,6 @@ public:
 		Vertex& operator-=(const Vertex& rhs)
 		{
 			pos -= rhs.pos;
-			
 			return *this;
 		}
 		Vertex operator-(const Vertex& rhs) const
@@ -50,7 +43,6 @@ public:
 		Vertex& operator*=(float rhs)
 		{
 			pos *= rhs;
-			
 			return *this;
 		}
 		Vertex operator*(float rhs) const
@@ -60,7 +52,6 @@ public:
 		Vertex& operator/=(float rhs)
 		{
 			pos /= rhs;
-			
 			return *this;
 		}
 		Vertex operator/(float rhs) const
@@ -71,32 +62,19 @@ public:
 		Vec3 pos;
 		Vec3 n;
 	};
-	// calculate color based on normal to light angle
-	// no interpolation of color attribute
-	class VertexShader
-	{
+
+	class VertexShader {
 	public:
-		class Output
-		{
+		class Output {
 		public:
 			Output() = default;
-			Output(const Vec3& pos)
-				:
-				pos(pos)
-			{}
-			Output(const Vec3& pos, const Output& src)
-				:
-				color(src.color),
-				pos(pos)
-			{}
-			Output(const Vec3& pos, const Color& color)
-				:
-				color(color),
-				pos(pos)
-			{}
+			Output(const Vec3& pos) : pos(pos){}
+			Output( const Vec3& pos, const Output& src)	: color(src.color), pos(pos) {}
+			Output(const Vec3& pos, const Vec3& color) : color(color), pos(pos) {}
 			Output& operator+=(const Output& rhs)
 			{
 				pos += rhs.pos;
+				color += rhs.color;
 				return *this;
 			}
 			Output operator+(const Output& rhs) const
@@ -106,6 +84,7 @@ public:
 			Output& operator-=(const Output& rhs)
 			{
 				pos -= rhs.pos;
+				color -= rhs.color;
 				return *this;
 			}
 			Output operator-(const Output& rhs) const
@@ -115,6 +94,7 @@ public:
 			Output& operator*=(float rhs)
 			{
 				pos *= rhs;
+				color *= rhs;
 				return *this;
 			}
 			Output operator*(float rhs) const
@@ -124,73 +104,68 @@ public:
 			Output& operator/=(float rhs)
 			{
 				pos /= rhs;
+				color /= rhs;
 				return *this;
 			}
 			Output operator/(float rhs) const
 			{
 				return Output(*this) /= rhs;
 			}
+		
 		public:
 			Vec3 pos;
-			Color color;
+			Vec3 color;
 		};
 	public:
-		void BindRotation(const Mat3& rotation_in)
-		{
+		void BindRotation(const Mat3& rotation_in) {
 			rotation = rotation_in;
 		}
-		void BindTranslation(const Vec3& translation_in)
-		{
+
+		void BindTranslation(const Vec3& translation_in) {
 			translation = translation_in;
 		}
-		Output operator()(const Vertex& v) const
-		{
-			// calculate intensity based on angle of incidence
+
+		Output operator()(const Vertex& v) const {
 			const auto d = diffuse * std::max(0.0f, -(v.n * rotation) * dir);
-			// add diffuse+ambient, filter by material color, saturate and scale
 			const auto c = color.GetHadamard(d + ambient).Saturate() * 255.0f;
-			return{ v.pos * rotation + translation,Color(c) };
+			return { v.pos * rotation + translation, c };
 		}
-		void SetDiffuseLight(const Vec3& c)
-		{
-			diffuse = { c.x,c.y,c.z };
+		void SetDiffuseLight(const Vec3& c) {
+			diffuse = { c.x, c.y, c.z };
 		}
-		void SetAmbientLight(const Vec3& c)
-		{
-			ambient = { c.x,c.y,c.z };
+
+		void SetAmbientlight(const Vec3& c) {
+			ambient = { c.x, c.y, c.z };
 		}
-		void SetLightDirection(const Vec3& dl)
-		{
+		void SetLightDirection(const Vec3& dl) {
 			assert(dl.LenSq() >= 0.001f);
 			dir = dl.GetNormalized();
 		}
-		void SetMaterialColor(Color c)
-		{
+		void SetMaterialColor(Color c) {
 			color = Vec3(c);
 		}
+
+
 	private:
 		Mat3 rotation;
 		Vec3 translation;
-		Vec3 dir = { 0.0f,0.0f,1.0f };
-		Vec3 diffuse = { 1.0f,1.0f,1.0f };
-		Vec3 ambient = { 0.1f,0.1f,0.1f };
-		Vec3 color = { 0.8f,0.85f,1.0f };
+		Vec3 dir = { 0.0f, 0.0f, 1.0f };
+		Vec3 diffuse = { 1.0f, 1.0f, 1.0f };
+		Vec3 ambient = { 0.1f, 0.1f , 0.1f };
+		Vec3 color   = { 0.8f, 0.85f, 0.8f };
+
 	};
-	// default gs passes vertices through and outputs triangle
+
 	typedef DefaultGeometryShader<VertexShader::Output> GeometryShader;
-	// invoked for each pixel of a triangle
-	// takes an input of attributes that are the
-	// result of interpolating vertex attributes
-	// and outputs a color
-	class PixelShader
-	{
+
+	class PixelShader {
 	public:
 		template<class Input>
-		Color operator()(const Input& in) const
-		{
-			return in.color;
+		Color operator()(const Input& in)const {
+			return Color(in.color);
 		}
 	};
+
 public:
 	VertexShader vs;
 	GeometryShader gs;
