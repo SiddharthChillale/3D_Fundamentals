@@ -5,10 +5,12 @@
 #include "Mat3.h"
 #include "Cube.h"
 #include "Pipeline.h"
+#include "SolidEffect.h"
 
 class GouradPointScene : public Scene {
 public:
-	typedef Pipeline<GouradPointEffect> Pipeline;
+	typedef ::Pipeline<GouradPointEffect> Pipeline;
+	typedef ::Pipeline<SolidEffect> LightIndicatorPipeline;
 	typedef Pipeline::Vertex Vertex;
 
 public:
@@ -16,10 +18,14 @@ public:
 		:
 		itlist(std::move(tl)),
 		pipeline(gfx),
+		lPipeline(gfx),
 		Scene("gourad shader scene free mesh")
 	{
 		itlist.AdjustToTrueCenter();
 		offset_z = itlist.GetRadius() * 1.6f;
+		for (auto& v : lightindicator.vertices) {
+			v.color = Colors::White;
+		}
 	}
 
 	virtual void Update(Keyboard& kbd, Mouse& mouse, float dt) override {
@@ -90,10 +96,17 @@ public:
 		pipeline.effect.vs.SetLightPosition({ lpos_x, lpos_y, lpos_z });
 
 		pipeline.Draw( itlist );
+
+		lPipeline.BeginFrame();
+		lPipeline.effect.vs.BindTranslation({ lpos_x, lpos_y, lpos_z });
+		lPipeline.effect.vs.BindRotation(Mat3::Identity());
+		lPipeline.Draw(lightindicator);
 	}
 private:
 	IndexTriangleList<Vertex> itlist;
+	IndexTriangleList<SolidEffect::Vertex> lightindicator = Sphere::GetPlain<SolidEffect::Vertex>(0.05f);
 	Pipeline pipeline;
+	LightIndicatorPipeline lPipeline;
 	static constexpr float dTheta = PI;
 	float offset_z = 2.0f;
 	float theta_x = 0.0f;
