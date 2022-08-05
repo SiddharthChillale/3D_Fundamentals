@@ -26,10 +26,10 @@ public:
 	:
 	Pipeline(gfx, std::make_shared<ZBuffer> (gfx.ScreenWidth, gfx.ScreenHeight))
 	{}
-	Pipeline(Graphics& gfx, std::shared_ptr<ZBuffer>pZb) :
+	Pipeline(Graphics& gfx, std::shared_ptr<ZBuffer>pZb_in) :
 		gfx(gfx),
-		pZb(std::move(pZb)) {
-		assert(pZb->height == gfx.ScreenHeight && pZb->width == gfx.ScreenWidth);
+		pZb(std::move(pZb_in)) {
+		assert(pZb->GetHeight() == gfx.ScreenHeight && pZb->GetWidth() == gfx.ScreenWidth);
 	}
 
 	void Draw(IndexTriangleList<Vertex>& triList) {

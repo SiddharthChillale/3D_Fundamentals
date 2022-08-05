@@ -48,7 +48,12 @@ public:
 		}
 		return false;
 	}
-
+	int GetHeight()const {
+		return height;
+	}
+	int GetWidth()const {
+		return width;
+	}
 private:
 	int width;
 	int height;
