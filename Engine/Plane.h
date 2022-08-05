@@ -77,4 +77,13 @@ public:
 		return itlist;
 	}
 
+	template<class V>
+	static IndexTriangleList<V> GetNormals(int divisions = 7, float size = 1.0f) {
+		auto itList = GetPlain<V>(divisions, size);
+		for (auto& v : itList.vertices) {
+			v.n = { 0.f, 0.f, -1.f };
+		}
+
+		return itList;
+	}
 };
