@@ -165,6 +165,12 @@
     <ClInclude Include="GouraudScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GouradPointEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GouradPointScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
