@@ -115,6 +115,6 @@ private:
 	float theta_z = 0.0f;
 	float lpos_x = 0.0f;
 	float lpos_y = 0.0f;
-	float lpos_z = 0.0f;
+	float lpos_z = 0.6f;
 	
 };
