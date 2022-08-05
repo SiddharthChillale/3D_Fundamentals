@@ -8,6 +8,7 @@
 #include "Mat3.h"
 #include "ZBuffer.h"
 
+#include <memory>
 #include <algorithm>
 
 // fixed-function triangle drawing pipeline
@@ -23,15 +24,20 @@ public:
 public:
 	Pipeline(Graphics& gfx) 
 	:
-	gfx(gfx),
-	zb(gfx.ScreenWidth, gfx.ScreenHeight)
+	Pipeline(gfx, std::make_shared<ZBuffer> (gfx.ScreenWidth, gfx.ScreenHeight))
 	{}
+	Pipeline(Graphics& gfx, std::shared_ptr<ZBuffer>pZb) :
+		gfx(gfx),
+		pZb(std::move(pZb)) {
+		assert(pZb->height == gfx.ScreenHeight && pZb->width == gfx.ScreenWidth);
+	}
+
 	void Draw(IndexTriangleList<Vertex>& triList) {
 		ProcessVertices(triList.vertices, triList.indices);
 	}
 	
 	void BeginFrame() {
-		zb.Clear();
+		pZb->Clear();
 	}
 	
 
@@ -215,7 +221,7 @@ private:
 
 				const float z = 1.0f / iLine.pos.z;
 
-				if (zb.TestAndSet(x, y, z)) {
+				if (pZb->TestAndSet(x, y, z)) {
 					const auto attr = iLine * z;
 
 					// perform texture lookup, clamp, and write pixel
@@ -229,7 +235,6 @@ private:
 		Effect effect;
 private:
 	Graphics& gfx;
-	ZBuffer zb;
 	NDCSpaceTransformer nst;
-	std::unique_ptr<Surface> pTex;
+	std::shared_ptr<ZBuffer> pZb;
 };

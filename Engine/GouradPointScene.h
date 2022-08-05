@@ -17,8 +17,9 @@ public:
 	GouradPointScene(Graphics& gfx, IndexTriangleList<Vertex> tl) 
 		:
 		itlist(std::move(tl)),
-		pipeline(gfx),
-		lPipeline(gfx),
+		pZb(std::make_shared<ZBuffer>(gfx.ScreenHeight, gfx.ScreenWidth)),
+		pipeline(gfx, pZb),
+		lPipeline(gfx, pZb),
 		Scene("gourad shader scene free mesh")
 	{
 		itlist.AdjustToTrueCenter();
@@ -97,7 +98,6 @@ public:
 
 		pipeline.Draw( itlist );
 
-		lPipeline.BeginFrame();
 		lPipeline.effect.vs.BindTranslation({ lpos_x, lpos_y, lpos_z });
 		lPipeline.effect.vs.BindRotation(Mat3::Identity());
 		lPipeline.Draw(lightindicator);
@@ -105,6 +105,7 @@ public:
 private:
 	IndexTriangleList<Vertex> itlist;
 	IndexTriangleList<SolidEffect::Vertex> lightindicator = Sphere::GetPlain<SolidEffect::Vertex>(0.05f);
+	std::shared_ptr<ZBuffer> pZb;
 	Pipeline pipeline;
 	LightIndicatorPipeline lPipeline;
 	static constexpr float dTheta = PI;
