@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 #include "GouradPointEffect.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "Cube.h"
 #include "Pipeline.h"
 #include "SolidEffect.h"

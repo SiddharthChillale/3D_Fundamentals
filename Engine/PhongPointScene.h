@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include "PhongPointEffect.h"
 #include "Cube.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "Pipeline.h"
 #include "SolidEffect.h"
 #include "Sphere.h"

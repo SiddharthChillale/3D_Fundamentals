@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 #include "Cube.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "Pipeline.h"
 #include "GeometryFlatEffect.h"
 

@@ -5,7 +5,7 @@
 #include "Triangle.h"
 #include "IndexedTriangles.h"
 #include "NDCSpaceTransformer.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "ZBuffer.h"
 
 #include <memory>

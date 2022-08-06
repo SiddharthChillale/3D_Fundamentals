@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scene.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "SpecularPhongPointEffect.h"
 #include "SolidEffect.h"
 #include "Sphere.h"

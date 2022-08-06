@@ -6,7 +6,7 @@
 
 #include "Scene.h"
 #include "Plane.h"
-#include "Mat3.h"
+#include "Matrix.h"
 #include "WaveVertexTextureEffect.h"
 
 class VertexWaveScene : public Scene

@@ -153,6 +153,7 @@
     <ClInclude Include="IndexedTriangles.h" />
     <ClInclude Include="MainException.h" />
     <ClInclude Include="BaseMath.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Miniball.h" />
     <ClInclude Include="PhongPointEffect.h" />
     <ClInclude Include="PhongPointScene.h" />
