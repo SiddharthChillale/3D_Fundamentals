@@ -14,16 +14,16 @@
 #include "GouraudScene.h"
 #include "GouradPointScene.h"
 #include "PhongPointScene.h"
-
+#include "SpecularPhongPointScene.h"
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd )	
 {
 	scenes.push_back(std::make_unique<PhongPointScene>(gfx,  Plane::GetNormals<PhongPointScene::Vertex>(16)));
-	scenes.push_back(std::make_unique<GouradPointScene>(gfx, Plane::GetNormals<GouradPointScene::Vertex>(16)));
+	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, Plane::GetNormals<SpecularPhongPointScene::Vertex>(16)));
 	scenes.push_back(std::make_unique<PhongPointScene>(gfx, IndexTriangleList<PhongPointScene::Vertex>::LoadNormals("Models\\suzanne.obj")));
-	scenes.push_back(std::make_unique<GouradPointScene>(gfx, IndexTriangleList<GouradPointScene::Vertex>::LoadNormals("Models\\suzanne.obj")));
+	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, IndexTriangleList<SpecularPhongPointScene::Vertex>::LoadNormals("Models\\suzanne.obj")));
 	scenes.push_back(std::make_unique<GouraudScene>(gfx, Sphere::GetPlainNormals<GouraudScene::Vertex>()));
 	scenes.push_back(std::make_unique<GeometryFlatScene>(gfx, Sphere::GetPlain<GeometryFlatScene::Vertex>()));
 	scenes.push_back(std::make_unique<GeometryFlatScene>(gfx, IndexTriangleList<GeometryFlatScene::Vertex>::Load("Models\\suzanne.obj")));
