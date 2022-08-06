@@ -161,7 +161,7 @@ public:
 		Vec3 light_pos = { 0.f, 0.f, 0.5f };
 		Vec3 light_diffuse = { 1.f, 1.f, 1.f };
 		Vec3 light_ambient = { 0.1f, 0.1f, 0.1f };
-		Vec3 material_color = { 0.8f, 0.8f, 1.0f };
+		Vec3 material_color = { 0.8f, 0.85f, 1.0f };
 
 		float linear_attenuation = 1.0f;
 		float quadratic_attenuation = 2.619f;

@@ -171,6 +171,12 @@
     <ClInclude Include="GouradPointScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhongPointEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhongPointScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
