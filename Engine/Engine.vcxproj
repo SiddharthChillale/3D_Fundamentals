@@ -182,8 +182,6 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="Mat2.h" />
-    <ClInclude Include="Mat3.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NDCSpaceTransformer.h" />
     <ClInclude Include="Rect.h" />
