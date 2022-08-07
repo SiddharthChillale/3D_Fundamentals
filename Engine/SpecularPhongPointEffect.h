@@ -93,25 +93,22 @@ public:
 				return Output(*this) /= rhs;
 			}
 		public:
-			Vec3 pos;
-			Vec3 n;
+			Vec4 pos;
+			Vec4 n;
 			Vec3 worldPos;
 		};
 	public:
-		void BindRotation(const Mat3& rotation_in) {
-			rotation = rotation_in;
+		void BindTransformation(const Mat4& transformation_in) {
+			transformation = transformation_in;
 		}
-		void BindTranslation(const Vec3& translation_in) {
-			translation = translation_in;
-		}
+		
 		Output operator()(const Vertex& v) const {
-			const auto pos = v.pos * rotation + translation;
-			return { pos, v.n * rotation, pos };
+			const auto pos = Vec4(v.pos ) * transformation;
+			return { pos, Vec4( v.n, 0.0f) * transformation , pos };
 		}
 		
 	public:
-		Mat3 rotation;
-		Vec3 translation;
+		Mat4 transformation;
 	};
 
 	class PixelShader {
