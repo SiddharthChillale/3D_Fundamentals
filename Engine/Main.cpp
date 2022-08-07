@@ -1,7 +1,7 @@
 #include "MainException.h"
 #include "MainWindow.h"
 #include "Game.h"
-
+#include "Matrix.h"
 
 int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR pArgs,INT )
 {
