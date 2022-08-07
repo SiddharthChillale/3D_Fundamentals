@@ -1,7 +1,7 @@
 #pragma once
 #include <limits>
 #include <cassert>
-
+#include <algorithm>
 
 class ZBuffer {
 public:
@@ -53,6 +53,10 @@ public:
 	}
 	int GetWidth()const {
 		return width;
+	}
+
+	auto GetMinMax()const {
+		return std::minmax_element(pBuffer, pBuffer + width * height);
 	}
 private:
 	int width;

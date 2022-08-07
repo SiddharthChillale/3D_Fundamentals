@@ -32,17 +32,17 @@ public:
 		class Output {
 		public:
 			Output() = default;
-			Output(const Vec3& pos)
+			Output(const Vec4& pos)
 				:
 				pos(pos)
 			{}
-			Output(const Vec3& pos, const Output& src)
+			Output(const Vec4& pos, const Output& src)
 				:
 				n(src.n),
 				worldPos(src.worldPos),
 				pos(pos)
 			{}
-			Output(const Vec3& pos, const Vec3& n, const Vec3& worldPos)
+			Output(const Vec4& pos, const Vec3& n, const Vec3& worldPos)
 				:
 				n(n),
 				pos(pos),
@@ -94,21 +94,32 @@ public:
 			}
 		public:
 			Vec4 pos;
-			Vec4 n;
+			Vec3 n;
 			Vec3 worldPos;
 		};
 	public:
-		void BindTransformation(const Mat4& transformation_in) {
-			transformation = transformation_in;
+		void BindWorld(const Mat4& transformation_in) {
+			world = transformation_in;
+			worldProj = world * proj;
 		}
-		
+		void BindProjection(const Mat4& transformation_in) {
+			proj = transformation_in;
+			worldProj = world * proj;
+		}
+		const Mat4& GetProj() const {
+			return proj;
+		}
+
 		Output operator()(const Vertex& v) const {
-			const auto pos = Vec4(v.pos ) * transformation;
-			return { pos, Vec4( v.n, 0.0f) * transformation , pos };
+			const auto pos = Vec4(v.pos ) ;
+			return { pos * worldProj, Vec4{v.n, 0.0f } *world, pos* world
+		};
 		}
 		
 	public:
-		Mat4 transformation;
+		Mat4 world= Mat4::Identity();
+		Mat4 proj = Mat4::Identity();
+		Mat4 worldProj = Mat4::Identity();
 	};
 
 	class PixelShader {

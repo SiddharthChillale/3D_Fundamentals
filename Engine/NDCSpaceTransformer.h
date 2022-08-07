@@ -15,14 +15,14 @@ public:
 
 	template<class Vertex>
 	Vertex& Transform(Vertex& v)const {
-		const float zInv = 1.0f / v.pos.z;
+		const float wInv = 1.0f / v.pos.w;
 		
-		v *= zInv;
+		v *= wInv;
 
 		v.pos.x = ( v.pos.x  + 1.f) * xFactor;
 		v.pos.y = (-v.pos.y  + 1.f) * yFactor;
 
-		v.pos.z = zInv;
+		v.pos.w = wInv;
 
 		return v;
 	}

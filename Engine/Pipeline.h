@@ -62,13 +62,15 @@ private:
 	// assembles indexed vertex stream into triangles and passes them to post process
 	// culls (does not send) back facing triangles
 	void AssembleTriangles(const std::vector<VSOut>& vertices, const std::vector<size_t>& indices) {
+
+		const auto eyepos = Vec4{ 0.0f, 0.0f, 0.0f, 1.0f } * effect.vs.GetProj();
 		for (size_t i = 0, end = indices.size() / 3; i < end; i++) {
 			const auto& v0 = vertices[indices[i * 3 + 0]];
 			const auto& v1 = vertices[indices[i * 3 + 1]];
 			const auto& v2 = vertices[indices[i * 3 + 2]];
 
 			// take care of backface culling
-			if (((v1.pos - v0.pos).cross(v2.pos - v0.pos)) * v0.pos <= 0.0f) {
+			if (((v1.pos - v0.pos).cross(v2.pos - v0.pos)) * Vec3(v0.pos - eyepos) <= 0.0f) {
 				// process the three vertices into a triangle
 				ProcessTriangle(v0, v1, v2,i);
 			}
@@ -221,8 +223,9 @@ private:
 
 				const float z = 1.0f / iLine.pos.z;
 
-				if (pZb->TestAndSet(x, y, z)) {
-					const auto attr = iLine * z;
+				if (pZb->TestAndSet(x, y, iLine.pos.z)) {
+					const float w = 1.0f / iLine.pos.w;
+					const auto attr = iLine * w;
 
 					// perform texture lookup, clamp, and write pixel
 					gfx.PutPixel(x, y, effect.ps(attr));
