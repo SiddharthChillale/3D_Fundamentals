@@ -69,5 +69,5 @@ private:
 	Surface												sysBuffer;
 public:
 	static constexpr unsigned int ScreenWidth = 853u;
-	static constexpr unsigned int ScreenHeight = 480u;
+	static constexpr unsigned int ScreenHeight = 500u;
 };
