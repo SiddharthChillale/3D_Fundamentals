@@ -90,7 +90,7 @@ public:
 	virtual void Draw()override {
 		pipeline.BeginFrame();
 		
-		const auto proj = Mat4::Projection(2.0f, 2.0f, 1.0f, 10.0f);
+		const auto proj = Mat4::Projection(3.55555f, 2.0f, 1.0f, 10.0f);
 		const Vec3 trans = { 0.0f, 0.0f, offset_z };
 		const Mat4 rot = Mat4::RotationX(theta_x) * Mat4::RotationY(theta_y) * Mat4::RotationZ(theta_z) * Mat4::Translation( trans );
 
