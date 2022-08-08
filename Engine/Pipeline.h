@@ -43,6 +43,8 @@ public:
 
 private:
 
+	
+
 	// vertex processing function
 	// transforms vertices and then passes vtx & idx lists to triangle assembler
 	void ProcessVertices(const std::vector<Vertex>& vertices, const std::vector<size_t>& indices) {
@@ -83,7 +85,25 @@ private:
 	void ProcessTriangle(const VSOut& v0, const VSOut& v1, const VSOut& v2, size_t triangle_index) {
 		// generate triangle from 3 vertices using gs
 		// and send to post-processing
-		PostProcessTriangleVertices(effect.gs(v0, v1, v2, triangle_index) );
+		ClipCullTriangle(effect.gs(v0, v1, v2, triangle_index));
+	}
+
+	void ClipCullTriangle(Triangle<GSOut>& t) {
+		if (std::abs(t.v0.pos.x) > t.v0.pos.w && std::abs(t.v1.pos.x) > t.v1.pos.w && std::abs(t.v2.pos.x) > t.v2.pos.w) {
+			return;
+		}
+		if (std::abs(t.v0.pos.y) > t.v0.pos.w && std::abs(t.v1.pos.y) > t.v1.pos.w && std::abs(t.v2.pos.y) > t.v2.pos.w) {
+			return;
+		}
+		if (t.v0.pos.z > t.v0.pos.w && t.v1.pos.z > t.v1.pos.w && t.v2.pos.z > t.v2.pos.w) {
+			return;
+		}
+		if (t.v0.pos.z < 0.0f && t.v1.pos.z < 0.0f && t.v2.pos.z < 0.0f) {
+			return;
+		}
+
+		PostProcessTriangleVertices(t);
+
 	}
 
 	// Perspective and viewport transform
@@ -192,8 +212,8 @@ private:
 		auto itEdge0 = it0;
 
 		// calculate start and end scanlines
-		const int yStart = (int)ceil(it0.pos.y - 0.5f);
-		const int yEnd = (int)ceil(it2.pos.y - 0.5f); // the scanline AFTER the last line drawn
+		const int yStart = std::max((int)ceil(it0.pos.y - 0.5f), 0);
+		const int yEnd   = std::min((int)ceil(it2.pos.y - 0.5f), (int)gfx.ScreenHeight - 1); // the scanline AFTER the last line drawn
 
 		// do interpolant prestep
 		itEdge0 += dv0 * (float(yStart) + 0.5f - it0.pos.y);
@@ -203,8 +223,8 @@ private:
 		for (int y = yStart; y < yEnd; y++, itEdge0 += dv0, itEdge1 += dv1)
 		{
 			// calculate start and end pixels
-			const int xStart = (int)ceil(itEdge0.pos.x - 0.5f);
-			const int xEnd = (int)ceil(itEdge1.pos.x - 0.5f); // the pixel AFTER the last pixel drawn
+			const int xStart = std::max((int)ceil(itEdge0.pos.x - 0.5f), 0);
+			const int xEnd   = std::min((int)ceil(itEdge1.pos.x - 0.5f), (int)gfx.ScreenWidth - 1); // the pixel AFTER the last pixel drawn
 
 			// create scanline interpolant startpoint
 			// (some waste for interpolating x,y,z, but makes life easier not having
