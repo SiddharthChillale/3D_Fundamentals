@@ -22,111 +22,91 @@ public:
 		lpipeline(gfx, pZb),
 		Scene("specular phong shader") {
 		itlist.AdjustToTrueCenter();
-		offset_z = itlist.GetRadius() * 1.6f;
+		model_pos.z = itlist.GetRadius() * 1.6f;
 		for (auto& v : lightindicator.vertices) {
 			v.color = Colors::White;
 		}
 	}
 		
 	virtual void Update(Keyboard& kbd, Mouse& mouse, float dt) override {
-		if (kbd.KeyIsPressed('Q'))
-		{
-			theta_x = wrap_angle(theta_x + dTheta * dt);
-		}
+		
 		if (kbd.KeyIsPressed('W'))
 		{
-			theta_y = wrap_angle(theta_y + dTheta * dt);
-		}
-		if (kbd.KeyIsPressed('E'))
-		{
-			theta_z = wrap_angle(theta_z + dTheta * dt);
+			camera_pos.z += camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('A'))
 		{
-			theta_x = wrap_angle(theta_x - dTheta * dt);
+			camera_pos.x -= camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('S'))
 		{
-			theta_y = wrap_angle(theta_y - dTheta * dt);
+			camera_pos.z -= camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('D'))
 		{
-			theta_z = wrap_angle(theta_z - dTheta * dt);
+			camera_pos.x += camera_speed * dt;
 		}
-		if (kbd.KeyIsPressed('U'))
-		{
-			lpos_x += 0.2f * dt;
-		}
+
 		if (kbd.KeyIsPressed('I'))
 		{
-			lpos_y += 0.2f * dt;
-		}
-		if (kbd.KeyIsPressed('O'))
-		{
-			lpos_z += 0.2f * dt;
+			light_pos.z += camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('J'))
 		{
-			lpos_x -= 0.2f * dt;
+			light_pos.x -= camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('K'))
 		{
-			lpos_y -= 0.2f * dt;
+			light_pos.z -= camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('L'))
 		{
-			lpos_z -= 0.2f * dt;
+			light_pos.x += camera_speed * dt;
 		}
-		if (kbd.KeyIsPressed('R'))
-		{
-			offset_z += 0.9f * dt;
-		}
-		if (kbd.KeyIsPressed('F'))
-		{
-			offset_z -= 0.2f * dt;
-		}
-		if (kbd.KeyIsPressed('N'))
-		{
-			phi -= 1.8f * dt;
-		}
-		if (kbd.KeyIsPressed('M'))
-		{
-			phi += 1.8f * dt;
-		}
+		
 	}
 
 	virtual void Draw()override {
 		pipeline.BeginFrame();
 		
-		const auto proj = Mat4::ProjectionHFOV(100.0f, 1.77f, 0.5f, 10.0f);
-		const Vec3 trans = { 0.0f, 0.0f, offset_z };
-		const Mat4 rot = Mat4::RotationX(theta_x) * Mat4::RotationY(theta_y) * Mat4::RotationZ(theta_z) * Mat4::Translation( trans )* Mat4::RotationY(phi);
+		const auto proj = Mat4::ProjectionHFOV(hfov, aspect_ratio, 0.5f, 10.0f);
+		const auto view = Mat4::Translation(-camera_pos);
+		
+		const Mat4 rot = Mat4::RotationX(theta_x) * Mat4::RotationY(theta_y) * Mat4::RotationZ(theta_z) * Mat4::Translation(model_pos);
 
 		pipeline.effect.vs.BindWorld(rot);
+		pipeline.effect.vs.BindView(view);
 		pipeline.effect.vs.BindProjection(proj);
-		pipeline.effect.ps.SetLightPosition({ lpos_x, lpos_y, lpos_z });
+		pipeline.effect.ps.SetLightPosition(light_pos * view );
 		pipeline.Draw(itlist);
 
-		lpipeline.effect.vs.BindWorld(Mat4::Translation(lpos_x, lpos_y, lpos_z ));
+		lpipeline.effect.vs.BindWorldView(Mat4::Translation(light_pos) * view);
 		lpipeline.effect.vs.BindProjection(proj);
 		lpipeline.Draw(lightindicator);
+
 	}
 
 private:
 	IndexTriangleList<Vertex> itlist;
 	IndexTriangleList<SolidEffect::Vertex> lightindicator = Sphere::GetPlain<SolidEffect::Vertex>(0.05f);
+
 	std::shared_ptr<ZBuffer> pZb;
 	Pipeline pipeline;
 	LIPipeline lpipeline;
-	static constexpr float dTheta = PI;
-	float offset_z = 2.0f;
+	
+	static constexpr float aspect_ratio = 1.77777f;
+	static constexpr float hfov = 100.0f;
+	static constexpr float vfov = hfov / aspect_ratio;
+
+	static constexpr float htrack = hfov / (float)Graphics::ScreenWidth;
+	static constexpr float vtrack = vfov / (float)Graphics::ScreenHeight;
+	static constexpr float camera_speed = 1.0f;
 
 	float theta_x = 0.0f;
 	float theta_y = 0.0f;
 	float theta_z = 0.0f;
 
-	float lpos_x = 0.0f;
-	float lpos_y = 0.0f;
-	float lpos_z = 0.6f;
-	float phi = 0.0f;        
+	Vec3 camera_pos = { 0.0f, 0.0f, 0.0f };
+	Vec3 model_pos  = { 0.0f, 0.0f, 2.0f };
+	Vec4 light_pos  = { 0.0f, 0.0f, 0.6f, 1.0f };
 };

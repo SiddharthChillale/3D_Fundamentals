@@ -100,31 +100,35 @@ public:
 	public:
 		void BindWorld(const Mat4& transformation_in) {
 			world = transformation_in;
-			worldProj = world * proj;
+			worldView = world * view;
+			worldViewProj = worldView * proj;
+		}
+		void BindView(const Mat4& transformation_in) {
+			view = transformation_in;
+			worldView = world * view;
+			worldViewProj = worldView * proj;
 		}
 		void BindProjection(const Mat4& transformation_in) {
 			proj = transformation_in;
-			worldProj = world * proj;
+			worldViewProj = worldView * proj;
 		}
 		const Mat4& GetProj() const {
 			return proj;
 		}
-
 		Output operator()(const Vertex& v) const {
 			const auto pos = Vec4(v.pos ) ;
-			return { pos * worldProj, Vec4{v.n, 0.0f } *world, pos* world
-		};
+			return { pos * worldViewProj, Vec4{v.n, 0.0f } *worldView, pos* worldView };
 		}
-		
 	public:
 		Mat4 world= Mat4::Identity();
+		Mat4 view = Mat4::Identity();
 		Mat4 proj = Mat4::Identity();
-		Mat4 worldProj = Mat4::Identity();
+		Mat4 worldView = Mat4::Identity();
+		Mat4 worldViewProj = Mat4::Identity();
 	};
 
 	class PixelShader {
 	public:
-
 		template<class Input>
 		Color operator()(const Input& in) const {
 			const auto surf_norm = in.n.GetNormalized();
