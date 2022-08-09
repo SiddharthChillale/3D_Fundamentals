@@ -22,3 +22,8 @@ T interpolate(const T& src, const T& dest, float alpha)
 {
 	return src + (dest - src) * alpha;
 }
+
+template<typename T>
+constexpr T to_rad(T deg) {
+	return deg * PI / (T)180.0;
+}

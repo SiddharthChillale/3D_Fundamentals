@@ -22,8 +22,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )	
 {
-	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, TestTriangle::GetNormals<SpecularPhongPointScene::Vertex>()));
 	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, IndexTriangleList<SpecularPhongPointScene::Vertex>::LoadNormals("Models\\suzanne.obj")));
+	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, TestTriangle::GetNormals<SpecularPhongPointScene::Vertex>()));
 	/*scenes.push_back(std::make_unique<PhongPointScene>(gfx, IndexTriangleList<PhongPointScene::Vertex>::LoadNormals("Models\\suzanne.obj")));
 	scenes.push_back(std::make_unique<PhongPointScene>(gfx,  Plane::GetNormals<PhongPointScene::Vertex>(16)));
 	scenes.push_back(std::make_unique<SpecularPhongPointScene>(gfx, Plane::GetNormals<SpecularPhongPointScene::Vertex>(16)));

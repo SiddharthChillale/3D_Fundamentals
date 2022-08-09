@@ -49,6 +49,17 @@ public:
 		}
 		return result;
 	}
+
+	_Mat Inverse()const {
+		_Mat inv;
+		for (size_t i = 0; i < S; i++) {
+			for (size_t j = 0; j < S; j++) {
+				inv.elements[i][j] = elements[j][i];
+			}
+		}
+		return inv;
+	}
+
 	constexpr static _Mat Identity()
 	{
 		if constexpr (S == 3)
