@@ -111,9 +111,6 @@
     <ClInclude Include="ZBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultVertexShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WaveVertexTextureEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -187,6 +184,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MouseTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseVertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

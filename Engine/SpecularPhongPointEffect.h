@@ -2,6 +2,7 @@
 
 #include "Pipeline.h"
 #include "DefaultGeometryShader.h"
+#include "BaseVertexShader.h"
 
 class SpecularPhongPointEffect {
 public:
@@ -26,105 +27,82 @@ public:
 		Vec3 pos;
 		Vec3 n;
 	};
-
-	class VertexShader {
+	class VSOutput {
 	public:
-		class Output {
-		public:
-			Output() = default;
-			Output(const Vec4& pos)
-				:
-				pos(pos)
-			{}
-			Output(const Vec4& pos, const Output& src)
-				:
-				n(src.n),
-				worldPos(src.worldPos),
-				pos(pos)
-			{}
-			Output(const Vec4& pos, const Vec3& n, const Vec3& worldPos)
-				:
-				n(n),
-				pos(pos),
-				worldPos(worldPos)
-			{}
-			Output& operator+=(const Output& rhs)
-			{
-				pos += rhs.pos;
-				n += rhs.n;
-				worldPos += rhs.worldPos;
-				return *this;
-			}
-			Output operator+(const Output& rhs) const
-			{
-				return Output(*this) += rhs;
-			}
-			Output& operator-=(const Output& rhs)
-			{
-				pos -= rhs.pos;
-				n -= rhs.n;
-				worldPos -= rhs.worldPos;
-				return *this;
-			}
-			Output operator-(const Output& rhs) const
-			{
-				return Output(*this) -= rhs;
-			}
-			Output& operator*=(float rhs)
-			{
-				pos *= rhs;
-				n *= rhs;
-				worldPos *= rhs;
-				return *this;
-			}
-			Output operator*(float rhs) const
-			{
-				return Output(*this) *= rhs;
-			}
-			Output& operator/=(float rhs)
-			{
-				pos /= rhs;
-				n /= rhs;
-				worldPos /= rhs;
-				return *this;
-			}
-			Output operator/(float rhs) const
-			{
-				return Output(*this) /= rhs;
-			}
-		public:
-			Vec4 pos;
-			Vec3 n;
-			Vec3 worldPos;
-		};
+		VSOutput() = default;
+		VSOutput(const Vec4& pos)
+			:
+			pos(pos)
+		{}
+		VSOutput(const Vec4& pos, const VSOutput& src)
+			:
+			n(src.n),
+			worldPos(src.worldPos),
+			pos(pos)
+		{}
+		VSOutput(const Vec4& pos, const Vec3& n, const Vec3& worldPos)
+			:
+			n(n),
+			pos(pos),
+			worldPos(worldPos)
+		{}
+		VSOutput& operator+=(const VSOutput& rhs)
+		{
+			pos += rhs.pos;
+			n += rhs.n;
+			worldPos += rhs.worldPos;
+			return *this;
+		}
+		VSOutput operator+(const VSOutput& rhs) const
+		{
+			return VSOutput(*this) += rhs;
+		}
+		VSOutput& operator-=(const VSOutput& rhs)
+		{
+			pos -= rhs.pos;
+			n -= rhs.n;
+			worldPos -= rhs.worldPos;
+			return *this;
+		}
+		VSOutput operator-(const VSOutput& rhs) const
+		{
+			return VSOutput(*this) -= rhs;
+		}
+		VSOutput& operator*=(float rhs)
+		{
+			pos *= rhs;
+			n *= rhs;
+			worldPos *= rhs;
+			return *this;
+		}
+		VSOutput operator*(float rhs) const
+		{
+			return VSOutput(*this) *= rhs;
+		}
+		VSOutput& operator/=(float rhs)
+		{
+			pos /= rhs;
+			n /= rhs;
+			worldPos /= rhs;
+			return *this;
+		}
+		VSOutput operator/(float rhs) const
+		{
+			return VSOutput(*this) /= rhs;
+		}
 	public:
-		void BindWorld(const Mat4& transformation_in) {
-			world = transformation_in;
-			worldView = world * view;
-			worldViewProj = worldView * proj;
-		}
-		void BindView(const Mat4& transformation_in) {
-			view = transformation_in;
-			worldView = world * view;
-			worldViewProj = worldView * proj;
-		}
-		void BindProjection(const Mat4& transformation_in) {
-			proj = transformation_in;
-			worldViewProj = worldView * proj;
-		}
-		const Mat4& GetProj() const {
-			return proj;
-		}
+		Vec4 pos;
+		Vec3 n;
+		Vec3 worldPos;
+	};
+	class VertexShader : public BaseVertexShader<VSOutput> {
+	public:
 		Output operator()(const Vertex& v) const {
 			const auto pos = Vec4(v.pos ) ;
 			return { pos * worldViewProj, Vec4{v.n, 0.0f } *worldView, pos* worldView };
 		}
 	public:
-		Mat4 world= Mat4::Identity();
-		Mat4 view = Mat4::Identity();
-		Mat4 proj = Mat4::Identity();
-		Mat4 worldView = Mat4::Identity();
-		Mat4 worldViewProj = Mat4::Identity();
+		
 	};
 
 	class PixelShader {

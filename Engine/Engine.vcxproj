@@ -136,12 +136,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseVertexShader.h" />
     <ClInclude Include="CubeFlatIndependentScene.h" />
     <ClInclude Include="CubeSolidGeometryScene.h" />
     <ClInclude Include="CubeSolidScene.h" />
     <ClInclude Include="CubeVertexColorScene.h" />
     <ClInclude Include="DefaultGeometryShader.h" />
-    <ClInclude Include="DefaultVertexShader.h" />
     <ClInclude Include="DoubleCubeScene.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="GeometryFlatEffect.h" />

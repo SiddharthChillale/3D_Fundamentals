@@ -104,8 +104,7 @@ public:
 		
 		const Mat4 rot = Mat4::RotationX(theta_x) * Mat4::RotationY(theta_y) * Mat4::RotationZ(theta_z) * Mat4::Translation(model_pos);
 
-		pipeline.effect.vs.BindWorld(rot);
-		pipeline.effect.vs.BindView(view);
+		pipeline.effect.vs.BindWorldView(rot * view);
 		pipeline.effect.vs.BindProjection(proj);
 		pipeline.effect.ps.SetLightPosition(light_pos * view );
 		pipeline.Draw(itlist);
