@@ -3,6 +3,7 @@
 #include "Pipeline.h"
 #include "DefaultGeometryShader.h"
 #include "BaseVertexShader.h"
+#include "BasePhongShader.h"
 
 class SpecularPhongPointEffect {
 public:
@@ -105,48 +106,17 @@ public:
 		
 	};
 
-	class PixelShader {
+	class PixelShader : public BasePhongShader<> {
 	public:
 		template<class Input>
 		Color operator()(const Input& in) const {
-			const auto surf_norm = in.n.GetNormalized();
-
-			const auto v_to_l = light_pos - in.worldPos;
-			const auto dist = v_to_l.Len();
-			const auto dir = v_to_l / dist;
-
-			const auto attenuation = 1.0f / (constant_attenuation + linear_attenuation * dist + quadratic_attenuation * sq(dist));
-
-			const auto d = light_diffuse * attenuation * std::max(0.0f, surf_norm * dir);
-			const auto w = surf_norm * (v_to_l * surf_norm);
-			const auto r = w * 2.0f - v_to_l;
-
-			const auto s = light_diffuse * specular_intensity * std::pow(std::max(0.0f, -r.GetNormalized() * in.worldPos.GetNormalized()), specular_power);
-
-			return Color(material_color.GetHadamard(d + light_ambient + s).Saturate() * 255.0f);
+			return Shade(in, material_color);
 		}
 
-		void SetDiffuseLight(const Vec3& c) {
-			light_diffuse = c;
-		}
-		void SetAmbientLight(const Vec3& c) {
-			light_ambient = c;
-		}
-		void SetLightPosition(const Vec3& pos) {
-			light_pos = pos;
-		}
 	public:
-		Vec3 light_pos = { 0.0f, 0.0f, 0.5f };
-		Vec3 light_diffuse = { 1.0f, 1.0f, 1.0f };
-		Vec3 light_ambient = { 0.1f, 0.1f, 0.1f };
+		
 		Vec3 material_color = { 0.8f, 0.85f, 1.0f };
 
-		float linear_attenuation = 1.0f;
-		float quadratic_attenuation = 2.619f;
-		float constant_attenuation = 0.382f;
-
-		float specular_power = 30.f;
-		float specular_intensity = 0.6f;
 	};
 
 	typedef DefaultGeometryShader<VertexShader::Output> GeometryShader;

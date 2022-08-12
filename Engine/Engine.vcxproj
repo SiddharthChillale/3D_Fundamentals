@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BasePhongShader.h" />
     <ClInclude Include="BaseVertexShader.h" />
     <ClInclude Include="CubeFlatIndependentScene.h" />
     <ClInclude Include="CubeSolidGeometryScene.h" />
