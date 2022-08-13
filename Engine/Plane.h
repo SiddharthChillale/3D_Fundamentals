@@ -97,7 +97,7 @@ public:
 
 	template<class V>
 	static IndexTriangleList<V> GetSkinnedNormals(int divisions_x = 7, int divisions_y = 7, float width = 1.0f, float height = 1.0f, float tScale= 1.0f) {
-		auto itList = GetSkinned<V>(divisions_x, divisions_y, width, height);
+		auto itList = GetSkinned<V>(divisions_x, divisions_y, width, height, tScale);
 		for (auto& v : itList.vertices) {
 			v.n = { 0.f, 0.f, -1.f };
 		}

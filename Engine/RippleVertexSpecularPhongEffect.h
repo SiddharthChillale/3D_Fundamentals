@@ -119,11 +119,13 @@ public:
 		}
 
 		typename BaseVertexShader::Output operator()(const Vertex& v)const {
-			const auto cosx = std::cos(wrap_angle(v.pos.x * freq + t * wavelength));
+			const auto angle = wrap_angle(v.pos.x * freq + t * wavelength);
+			const auto cosx = std::cos(angle);
+			const auto sinx = std::sin(angle);
 			const auto dz = amplitude * cosx;
 			const auto pos = Vec4{ v.pos.x, v.pos.y, v.pos.z + dz, 1.0f };
 
-			auto n = Vec4{ freq * amplitude * cosx, 0.0f, 1.0f, 0.0f };
+			auto n = Vec4{ -freq * amplitude * sinx, 0.0f, -1.0f, 0.0f };
 			n.Normalize();
 
 			return { pos * worldView, n * worldView, pos * worldView, v.t };

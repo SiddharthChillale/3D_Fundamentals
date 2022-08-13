@@ -82,44 +82,42 @@ public:
 
 		if (kbd.KeyIsPressed('W'))
 		{
-			camera_pos += Vec4{0.0f, 1.0f, 0.0f,  0.0f} * inv_camera_rot.Inverse() * camera_speed * dt;
+			camera_pos += Vec4{ 0.0f,0.0f,1.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('A'))
 		{
-			camera_pos += Vec4{ -1.0f, 0.0f, 0.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+			camera_pos += Vec4{ -1.0f,0.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('S'))
 		{
-			camera_pos += Vec4{ 0.0f,-1.0f, 0.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+			camera_pos += Vec4{ 0.0f,0.0f,-1.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
 		}
 		if (kbd.KeyIsPressed('D'))
 		{
-			camera_pos += Vec4{ 1.0f, 0.0f, 0.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+			camera_pos += Vec4{ 1.0f,0.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('C'))
+		{
+			camera_pos += Vec4{ 0.0f,1.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('Z'))
+		{
+			camera_pos += Vec4{ 0.0f,-1.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('Q'))
+		{
+			inv_camera_rot = inv_camera_rot * Mat4::RotationZ(cam_roll_speed * dt);
+		}
+		if (kbd.KeyIsPressed('E'))
+		{
+			inv_camera_rot = inv_camera_rot * Mat4::RotationZ(-cam_roll_speed * dt);
 		}
 
-
-		if (kbd.KeyIsPressed('I'))
+		while (!mouse.IsEmpty())
 		{
-			light_pos += Vec4{ 0.0f,  0.0f, 1.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
-		}
-		if (kbd.KeyIsPressed('J'))
-		{
-			light_pos += Vec4{ -1.0f, 0.0f, 0.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
-		}
-		if (kbd.KeyIsPressed('K'))
-		{
-			light_pos += Vec4{ 0.0f, 0.0f, -1.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
-		}
-		if (kbd.KeyIsPressed('L'))
-		{
-			light_pos += Vec4{ 1.0f, 0.0f, 0.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
-		}
-		
-		
-
-		if (!mouse.IsEmpty()) {
 			const auto e = mouse.Read();
-			switch (e.GetType()) {
+			switch (e.GetType())
+			{
 			case Mouse::Event::Type::LPress:
 				mt.Engage(e.GetPos());
 				break;
@@ -127,18 +125,13 @@ public:
 				mt.Release();
 				break;
 			case Mouse::Event::Type::Move:
-				if (mt.isEngaged()) {
+				if (mt.isEngaged())
+				{
 					const auto delta = mt.move(e.GetPos());
-					inv_camera_rot = inv_camera_rot * Mat4::RotationY((float)-delta.x * htrack)*Mat4::RotationX((float)-delta.y * vtrack);
+					inv_camera_rot = inv_camera_rot
+						* Mat4::RotationY((float)-delta.x * htrack)
+						* Mat4::RotationX((float)-delta.y * vtrack);
 				}
-				break;
-
-			case Mouse::Event::Type::WheelUp:
-				camera_pos += Vec4{ 0.0f, 0.0f, 1.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * 1.5f * dt;
-				break;
-
-			case Mouse::Event::Type::WheelDown:
-				camera_pos += Vec4{ 0.0f, 0.0f, -1.0f, 0.0f } *inv_camera_rot.Inverse() * camera_speed * 1.5 * dt;
 				break;
 			}
 		}
@@ -224,6 +217,7 @@ private:
 	float theta_z = 0.0f;
 	float rotspeed = PI / 4.0f;
 	float scale = 0.4;
+	static constexpr float cam_roll_speed = PI;
 
 	// light params
 	IndexTriangleList<SolidEffect::Vertex> lightindicator = Sphere::GetPlain<SolidEffect::Vertex>(0.05f);
