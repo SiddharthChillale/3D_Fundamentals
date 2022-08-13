@@ -49,7 +49,7 @@ public:
 		wpipeline(gfx, pZb),
 		rpipeline(gfx, pZb),
 		mt(),
-		Scene("specular phong shader") {
+		Scene("Fullscale scene with multiple objects") {
 		itlist.AdjustToTrueCenter();
 		for (auto& v : lightindicator.vertices) {
 			v.color = Colors::White;
@@ -111,6 +111,23 @@ public:
 		if (kbd.KeyIsPressed('E'))
 		{
 			inv_camera_rot = inv_camera_rot * Mat4::RotationZ(-cam_roll_speed * dt);
+		}
+
+		if (kbd.KeyIsPressed('I'))
+		{
+			light_pos += Vec4{ 0.0f,0.0f,1.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('J'))
+		{
+			light_pos += Vec4{ -1.0f,0.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('K'))
+		{
+			light_pos += Vec4{ 0.0f,0.0f,-1.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
+		}
+		if (kbd.KeyIsPressed('L'))
+		{
+			light_pos += Vec4{ 1.0f,0.0f,0.0f,0.0f } *inv_camera_rot.Inverse() * camera_speed * dt;
 		}
 
 		while (!mouse.IsEmpty())
@@ -177,6 +194,7 @@ public:
 			wpipeline.Draw(wall.model);
 		}
 
+		// render ripple plane
 		rpipeline.effect.ps.BindTexture(tSauron);
 		rpipeline.effect.ps.SetLightPosition(light_pos * view);
 		rpipeline.effect.vs.BindWorldView(sauronWorld * view);

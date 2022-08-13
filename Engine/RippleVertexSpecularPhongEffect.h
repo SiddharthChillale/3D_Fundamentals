@@ -128,7 +128,7 @@ public:
 			auto n = Vec4{ -freq * amplitude * sinx, 0.0f, -1.0f, 0.0f };
 			n.Normalize();
 
-			return { pos * worldView, n * worldView, pos * worldView, v.t };
+			return { pos * worldViewProj, n * worldView, pos * worldView, v.t };
 		}
 
 	public:
@@ -148,7 +148,7 @@ public:
 			const auto material_color = Vec3(pTex->GetPixel(
 				unsigned int(in.t.x * tex_width + 0.5f) % tex_width,
 				unsigned int(in.t.y * tex_height + 0.5f) % tex_height
-				));
+				)) / 255.0f ;
 			return Shade(in, material_color);
 		}
 
