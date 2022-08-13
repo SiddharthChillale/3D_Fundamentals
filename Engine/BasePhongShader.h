@@ -1,6 +1,6 @@
 #pragma once 
 #include "Colors.h"
-#include "Vec4.h"
+#include "Vec3.h"
 
 struct DefaultPhongDiffuseParams {
 	static constexpr float linear_atten = 1.0f;
@@ -17,7 +17,7 @@ template<class PointDiffuse = DefaultPhongDiffuseParams, class Specular = Defaul
 class BasePhongShader {
 public:
 	template<class Input>
-	Color Shade(const Input& in, const Vec4& material_color)const {
+	Color Shade(const Input& in, const Vec3& material_color)const {
 		const auto surf_norm = in.n.GetNormalized();
 		const auto v_to_l = light_pos - in.worldPos;
 		const auto dist = v_to_l.Len();

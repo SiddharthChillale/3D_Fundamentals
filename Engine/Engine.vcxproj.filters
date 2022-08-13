@@ -192,6 +192,12 @@
     <ClInclude Include="BasePhongShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VertexLightTexturedEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RippleVertexSpecularPhongEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">

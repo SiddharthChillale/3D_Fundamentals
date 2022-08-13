@@ -94,6 +94,7 @@
       <CallingConvention>VectorCall</CallingConvention>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,6 +130,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PreprocessorDefinitions>NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -161,6 +163,7 @@
     <ClInclude Include="PhongPointScene.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="RippleVertexSpecularPhongEffect.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SkinCubeScene.h" />
     <ClInclude Include="SolidEffect.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Vec4.h" />
     <ClInclude Include="VertexColorEffect.h" />
     <ClInclude Include="VertexFlatEffect.h" />
+    <ClInclude Include="VertexLightTexturedEffect.h" />
     <ClInclude Include="VertexWaveScene.h" />
     <ClInclude Include="WaveVertexTextureEffect.h" />
     <ClInclude Include="WinDefines.h" />

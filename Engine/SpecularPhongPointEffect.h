@@ -5,6 +5,7 @@
 #include "BaseVertexShader.h"
 #include "BasePhongShader.h"
 
+template<class Diffuse, class Specular>
 class SpecularPhongPointEffect {
 public:
 	class Vertex {
@@ -98,7 +99,7 @@ public:
 	};
 	class VertexShader : public BaseVertexShader<VSOutput> {
 	public:
-		Output operator()(const Vertex& v) const {
+		typename BaseVertexShader::Output operator()(const Vertex& v) const {
 			const auto pos = Vec4(v.pos ) ;
 			return { pos * worldViewProj, Vec4{v.n, 0.0f } *worldView, pos* worldView };
 		}
@@ -106,7 +107,7 @@ public:
 		
 	};
 
-	class PixelShader : public BasePhongShader<> {
+	class PixelShader : public BasePhongShader<Diffuse, Specular> {
 	public:
 		template<class Input>
 		Color operator()(const Input& in) const {
@@ -119,7 +120,7 @@ public:
 
 	};
 
-	typedef DefaultGeometryShader<VertexShader::Output> GeometryShader;
+	typedef DefaultGeometryShader<typename VertexShader::Output> GeometryShader;
 public:
 	VertexShader vs;
 	PixelShader ps;
